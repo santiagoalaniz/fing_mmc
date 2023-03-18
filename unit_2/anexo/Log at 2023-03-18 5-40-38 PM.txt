@@ -1,0 +1,4 @@
+➜  unit_2 git:(unit_2) ✗ python3 anexo/exercise_4_1.py
+eps=0.01, delta=0.001, nC=2500000, nN=27069, nH=38005
+eps=0.01, delta=0.01, nC=250000, nN=16588, nH=26492
+eps=0.01, delta=0.05, nC=50000, nN=9604, nH=18445

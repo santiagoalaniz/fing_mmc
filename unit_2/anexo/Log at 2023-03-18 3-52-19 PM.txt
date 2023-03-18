@@ -1,0 +1,6 @@
+➜  unit_2 git:(unit_2) ✗ python3 exercise_3_1.py LINEAR
+n = 10000, Vol_ = 0.0004, Var = 3.998799879987999e-08, time = 0:00:00.014806, BOUNDARIES = True
+n = 1000000, Vol_ = 0.000303, Var = 3.0290849390849393e-10, time = 0:00:01.317288, BOUNDARIES = True
+➜  unit_2 git:(unit_2) ✗ python3 exercise_3_1.py
+n = 10000, Vol_ = 0.0106, Var = 1.0488688868886888e-06, time = 0:00:00.024314, BOUNDARIES = False
+n = 1000000, Vol_ = 0.00952, Var = 9.42937902937903e-09, time = 0:00:01.600797, BOUNDARIES = False
