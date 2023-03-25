@@ -26,7 +26,7 @@ def n_of_samples_normal(delta, eps):
   return ceil(aux)
 
 def n_of_samples_hoeffding(delta, eps):
-  aux = 2 * ln(2 / delta) / (4 * (eps**2))
+  aux = (2 * ln(2 / delta)) / (4 * (eps**2))
   return ceil(aux)
 
 
