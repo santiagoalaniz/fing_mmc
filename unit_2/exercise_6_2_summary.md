@@ -1,10 +1,10 @@
-# I. Unidad 2 - Sesion 6 -  Ejercicio 6.2
+# I. Unidad 2 - Sesión 6 -  Ejercicio 6.2
 
 # II. Trabajo Grupal.
 
 Santiago Alaniz, CI 50826476, santiago.alaniz@fing.edu.uy
 
-# III. Descripcion del Problema
+# III. Descripción del Problema
 
 Problema: Se desea estimar la integral de la función x1x2^2x3^3x4^4x5^5 sobre el hipercubo Jm de dimensión m = 5.
 

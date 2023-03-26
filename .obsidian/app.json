@@ -1,0 +1,13 @@
+{
+  "spellcheckLanguages": [
+    "es-AR"
+  ],
+  "spellcheck": true,
+  "vimMode": true,
+  "pdfExportSettings": {
+    "pageSize": "A4",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 62
+  }
+}
