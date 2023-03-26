@@ -1,0 +1,7 @@
+➜  anexo git:(unit_2) ✗ python3 exercise_6_1.py
+Preliminary run
+n = 1000000, Int_ = 1.3403573708455303, Var = 3.568695069327664e-06, IC_Normal = (1.3366548048228324, 1.3440599368682282), time = 0:00:01.005527
+Calculating number of replications
+nN = 13708996, delta = 0.05, epsilon = 0.001
+Final run
+n = 13708996, Int_ = 1.3407907982281904, Var = 2.60005449916871e-07, IC_Normal = (1.3397913982937237, 1.341790198162657), time = 0:00:13.227137
