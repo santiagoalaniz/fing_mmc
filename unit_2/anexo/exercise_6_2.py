@@ -3,28 +3,11 @@ import datetime
 import math
 from scipy.stats import norm
 from scipy.integrate import quad
-import pdb
-
-# Constants
+import numpy as np
 
 # Seed number for the random number generator reproducibility
 SEED_NUMBER = 50826476
 random.seed(SEED_NUMBER)
-
-# Cone parameters
-CONE = {
-    'C': (0.5, 0.5),
-    'R': 0.4,
-    'H': 8,
-}
-
-# Function to estimate its integral,
-# F(x,y) = 0 if (x,y) is outside the cone
-# F(x,y) = H - ((H / R) * sqrt((x - C[0])**2 + (y - C[1])**2)) if (x,y) is inside the cone
-H = CONE['H']
-R = CONE['R']
-X0 = CONE['C'][0]
-Y0 = CONE['C'][1]
 
 
 def F(x1, x2, x3, x4, x5): return x1 * x2 ** 2 * x3 ** 3 * x4 ** 4 * x5 ** 5
@@ -33,10 +16,11 @@ def F(x1, x2, x3, x4, x5): return x1 * x2 ** 2 * x3 ** 3 * x4 ** 4 * x5 ** 5
 # Experiment parameters
 SAMPLE = 1000000
 DELTA = 0.05
-EPSILON = 0.001
+EPSILON = 0.0001
 i_norm = norm.ppf
-
-# Excercise solution
+i_norm_95 = i_norm(1 - DELTA/2)
+i_norm_90 = i_norm(1 - 0.1/2)
+i_norm_99 = i_norm(1 - 0.01/2)
 
 
 def main():
@@ -59,15 +43,37 @@ def main():
     nN = number_of_replications_normal(Var_F)
     print(f"nN = {nN}, delta = {DELTA}, epsilon = {EPSILON}")
 
-    reset_seed(1)
+    cubre_valor_90 = 0
+    cubre_valor_95 = 0
+    cubre_valor_99 = 0
+    for _ in range(500):
+        reset_seed(1)
+        (Int_, Var_Int_, IC_Normal, Var) = montecarlo_simulation(n=nN)
+        # 95%
+        if IC_Normal[0] <= analytic_value <= IC_Normal[1]:
+            cubre_valor_95 += 1
+        # 90%
+        IC_Normal = (Int_ - i_norm_90 * math.sqrt(Var_Int_),
+                     Int_ + i_norm_90 * math.sqrt(Var_Int_))
+        if IC_Normal[0] <= analytic_value <= IC_Normal[1]:
+            cubre_valor_90 += 1
+        # 99%
+        IC_Normal = (Int_ - i_norm_99 * math.sqrt(Var_Int_),
+                     Int_ + i_norm_99 * math.sqrt(Var_Int_))
+        if IC_Normal[0] <= analytic_value <= IC_Normal[1]:
+            cubre_valor_99 += 1
 
-    start_time = datetime.datetime.now()
-    (Int_, Var_Int_, IC_Normal, Var) = montecarlo_simulation(n=nN)
-    elapsed_time = datetime.datetime.now() - start_time
+    cubre_valor_90 /= 500
+    cubre_valor_95 /= 500
+    cubre_valor_99 /= 500
+
+    cubre_valor_90 *= 100
+    cubre_valor_95 *= 100
+    cubre_valor_99 *= 100
 
     print('Final run')
     print(
-        f"n = {nN}, Int_ = {Int_}, Var = {Var_Int_}, IC_Normal = {IC_Normal}, time = {elapsed_time}")
+        f"90% = {cubre_valor_90}, 95% = {cubre_valor_95}, 99% = {cubre_valor_99}")
 
 
 def montecarlo_simulation(n: int):
@@ -85,9 +91,8 @@ def montecarlo_simulation(n: int):
     Int_ = (S / n)
     Var_F = T / (n - 1)
     Var_Int_ = Var_F / n
-    i_norm_delta = i_norm(1 - DELTA/2)
-    IC_Normal = (Int_ - i_norm_delta * math.sqrt(Var_Int_),
-                 Int_ + i_norm_delta * math.sqrt(Var_Int_))
+    IC_Normal = (Int_ - i_norm_95 * math.sqrt(Var_Int_),
+                 Int_ + i_norm_95 * math.sqrt(Var_Int_))
 
     return (Int_, Var_Int_, IC_Normal, Var_F)
 
@@ -98,17 +103,6 @@ def random_point():
 
 def U_01():
     return random.uniform(0, 1)
-
-
-def point_in_circle(x_j):
-    center = CONE['C']
-    radius = CONE['R']
-    norm = 0
-
-    for i in range(len(x_j)):
-        norm += (x_j[i] - center[i])**2
-
-    return 'inside' if norm <= radius**2 else 'outside'
 
 
 def number_of_replications_normal(punctual_variance: float):

@@ -1,8 +1,8 @@
 # I. Unidad 2 - Sesion 6 -  Ejercicio 6.2
 
 # II. Trabajo Grupal.
-
-Santiago Alaniz, CI 50826476, santiago.alaniz@fing.edu.uy
+* Santiago Alaniz, CI 50826476, santiago.alaniz@fing.edu.uy
+* Bruno De Simone, CI 49145550, bruno.de.simone@fing.edu.uy
 
 # III. Descripcion del Problema
 
@@ -17,16 +17,45 @@ Problema: Se desea estimar la integral de la función x1x2^2x3^3x4^4x5^5 sobre e
 # IV. Descripcion de la Solucion
 
 ## Parte a)
+Se tomo la solucion en python debido a que ambos miembros tenian experiencia con el lenguaje. Los unicos cambios que se tuvieron que realizar para la adaptacion del codigo fueron:
+* En cada iteracion generar un vector de 5 dimensiones en vez de 2.
+* Cambiar la funcion que en el 6.1 obtenia la altura del punto por la funcion de la que se quiere calcular la integral.
+
+Luego para el calculo analitico simplemente se utilizo la biblioteca scipy que ofrece la funcionalidad de calcular integrales, se encadeno el llamado de esa funcion para integrar en [0,1] en dx_1, dx_2, dx_3, dx_4 y dx_5.
 
 ## Parte b)
+Se realizo lo mismo que en el ejericio 6.1 pero con una cota de error distinta.
 
 ## Parte c)
+Para esta parte se modifico un poco el codigo de la ultima parte del 6.1 agregando el calculo de los intervalos de confianza deseados 90%, 95%, 99% y agregando un loop que ejecute ese codigo 500 veces.
 
 # V. Resultados Computacionales
 
-1. MacBook Air, Apple M1, 2020, 8GB RAM, ptython 3.11.2
-2. Semilla: NO CORRESPONDE;
+1. AMD Ryzen 7 1700x a 3.4 GHz, 16 GB DDR4 3200mhz, python 3.10
+2. Semilla Inicial: 50826476;
 3. $(anexo) python3 exercise_6_2.py
+
+## Parte a)
+Se realizaron las 10^6 repeticiones lo cual genero:
+ * <b>Estimacion</b>: 0.0013768445624771088
+ * <b>Varianza de la estimacion</b>: 9.546173358639415e-11
+ * <b>Encontro intevalo de confianza en un 95% con cota de error de 0.0001</b>: (0.0013576948283138312, 0.0013959942966403865)
+ * <b>Duracion de ejecucion</b>: 2.296041s
+
+La solucion analitica para la integral de la funcion es: 0.0013888...
+
+## Parte b)
+A partir de la aproximacion normal obtuvimos:
+* <b>nN (minimo de replicaciones)</b>: 36672
+* delta: 0.05
+* epsilon: 0.0001
+
+## Parte c)
+Para las 500 iteraciones con distintas semillas encontramos que todos los intervalos de confianza cubren el valor analitico de la integral, entendemos que esto se debe a que realizamos previamente el calculo de el minimo numero de replicaciones que nos daban ciertas garantias. 
+
+Ademas los intervalos de confianza ofrecen un intevalo en el que la gran mayoria de estimaciones queden adentro (con ese error) del mismo entonces es de esperar que para garantizar eso (dado buenas estimaciones) cubran el valor real.
+
+Por ultimo, otra cosa que creemos enfluyo es que el numero incial de replicaciones es mucho mayor al minimo de replicaciones que garantizan 95% de confianza con error 0.0001 de cota de error, ese numero de replicaciones tanto mayor nos hace confiar mas en el nN.
 
 # VI. Anexo
 
