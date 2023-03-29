@@ -48,7 +48,7 @@ En esta sección se reutiliza código de partes anteriores, en particular de la 
 
 Sin embargo, se ha modificado levemente el código elegido en la **parte a**), ya que la función **montecarlo_simulation** original no devolvía el número de puntos que pertenecen a la región de interés (**S_n**), lo cual es necesario para los cálculos siguientes.
 
-Todo lo descrito hasta ahora forma parte de la etapa de precomputo. Una vez obtenidos los resultados, es decir, el valor de n_H y S_n_H, se procede a calcular los intervalos de confianza.
+Todo lo descrito hasta ahora forma parte de la etapa de pre computo. Una vez obtenidos los resultados, es decir, el valor de n_H y S_n_H, se procede a calcular los intervalos de confianza.
 
 Esto entra en concordancia con los requisitos a la hora de calcular intervalos de confianza.
 
@@ -87,9 +87,9 @@ def agresti_coull_interval_of_confidence(n_s=int, n=int, delta=float):
 ```
 
 ## Bases Teóricas
-- Calculo de intervalos de confianza, Unidad 2, Sesión 5.
+- Cálculo de intervalos de confianza, Unidad 2, Sesión 5.
 - Intervalo Agresti-Coull, https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti%E2%80%93Coull_interval
-- Interval Estimation fora Binomial Proportion, Lawrence D. Brown, T. Tony Cai and Anirban DasGupta
+- Interval Estimation for a Binomial Proportion, Lawrence D. Brown, T. Tony Cai and Anirban DasGupta
 
 
 # V. Resultados Computacionales
