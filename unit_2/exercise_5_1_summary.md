@@ -1,10 +1,11 @@
-# I. Unidad 2 - Sesion 5 -  Ejercicio 5.1
+# I. Unidad 2 - Sesión 5 -  Ejercicio 5.1
 
-# II. Trabajo individual.
+# II. Trabajo Grupal.
 
 Santiago Alaniz, CI 50826476, santiago.alaniz@fing.edu.uy
+Bruno De Simone, CI 49145550, bruno.de.simone@fing.edu.uy
 
-# III. Descripcion del Problema
+# III. Descripción del Problema
 ```
 Problema (enunciado en sesión 3, ejercicio 3.1): Se desea estimar el volumen de una región R en [0,1]^6 definida por todos los puntos de la hiperesfera de centro (0.45, 0.5, 0.6, 0.6, 0.5, 0.45) y radio 0.35 que además cumplan las siguientes restricciones: 3x1 + 7x4 ≤ 5; x3 + x4 ≤ 1; x1 - x2 - x5 + x6 ≥ 0.
 ```
@@ -14,9 +15,17 @@ Problema (enunciado en sesión 3, ejercicio 3.1): Se desea estimar el volumen de
 
 - **Parte c**: Utilizando el código elegido en la parte a y la cantidad de replicaciones definida en el punto anterior, calcular el intervalo de confianza de nivel 0.95 utilizando el criterio de Chebyshev y el criterio de Agresti-Coull. Comparar el ancho de estos intervalos entre sí y con el criterio de error manejado en el punto previo.
 
-# IV. Descripcion de la Solucion
+# IV. Descripción de la Solución
 
 ## Parte a)
+Los algoritmos implementados por cada uno son prácticamente iguales y arrojan resultados similares, la diferencia es dada por la semilla y generador. Se decidió continuar con la implementación en python ya que ambos miembros están familiarizados con el lenguaje, cosa que no sucede con rust.
+
+Ejecución para n=10^6 de ambas implementaciones:
+
+| Lenguaje| Estimación | Varianza     | Tiempo   |    
+|:-------:|:----------:|:------------:|:--------:|
+| Python  | 0.000303   | 3.029085e-10 | 2.85s    |   
+| Rust    | 0.00028    | 2.799219e-10 | 47.47ms  |  
 
 ## Parte b)
 En esta sección se utiliza el criterio de Hoeffding para calcular la cantidad de replicaciones necesarias que garantizan un error menor a 1.0 × 10^-4 con una probabilidad del 0.95.
@@ -99,7 +108,7 @@ def agresti_coull_interval_of_confidence(n_s=int, n=int, delta=float):
 
 ## Parte c)
 
-### Estimacion de Volumen con n=n_H de la Parte b)
+### Estimación de Volumen con n=n_H de la Parte b)
 |     n     |  S_n  |          Vol_          |           Var          | BOUNDARIES |      time      |
 |:---------:|:-----:|:----------------------:|:----------------------:|:----------:|:--------------:|
 | 184443973 | 52036 | 0.00028212361268101726 | 1.5291582364545105e-12 | True       | 0:04:04.174310 |
@@ -111,6 +120,7 @@ def agresti_coull_interval_of_confidence(n_s=int, n=int, delta=float):
 | Chebyshev              | 0.00029913319438221777 | 0.00030691677531528367 |
 | Agresti-Coull          | 0.0002707000568436197  | 0.00033913905930522254 |
 
+Se observa que ambos teoremas generan intervalos de menor amplitud que la cota de error máxima tolerada.
 # VI. Anexo
 
-Consultar la carpeta ~/anexo por los logs, capturas, código de la solucion y demás archivos de interés.
+Consultar la carpeta ~/anexo por los logs, capturas, código de la solución y demás archivos de interés.
