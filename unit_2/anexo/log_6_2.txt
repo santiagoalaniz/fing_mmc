@@ -1,0 +1,8 @@
+Preliminary run
+n = 1000000, Int_ = 0.0013768445624771088, Var = 9.546173358639415e-11, IC_Normal = (0.0013576948283138312, 0.0013959942966403865), time = 0:00:02.279870
+Analytical solution
+Analytic value = 0.001388888888888889
+Calculating number of replications
+nN = 36672, delta = 0.05, epsilon = 0.0001
+Final run
+90% = 100.0, 95% = 100.0, 99% = 100.0

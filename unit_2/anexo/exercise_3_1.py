@@ -33,9 +33,9 @@ LINEAR_BOUNDARIES = [
 def main():
   for sample in SAMPLES:
     start_time = datetime.datetime.now()
-    (Vol_, Var_s) = montecarlo_simulation(n=sample)
+    (Vol_, Var_s, S_n) = montecarlo_simulation(n=sample)
     elapsed_time = datetime.datetime.now() - start_time
-    print(f"n = {sample}, Vol_ = {Vol_}, Var = {Var_s}, time = {elapsed_time}, BOUNDARIES = {INCLUDE_BOUNDARIES}")
+    print(f"n = {sample}, Sn = {S_n}, Vol_ = {Vol_}, Var = {Var_s}, time = {elapsed_time}, BOUNDARIES = {INCLUDE_BOUNDARIES}")
 
 def montecarlo_simulation(n: int):
   # Initialize the variables
@@ -52,7 +52,7 @@ def montecarlo_simulation(n: int):
   Vol_ = S_n/n
   V_s = (S_n/n)*(1 - S_n/n)/(n-1)
 
-  return (Vol_, V_s)
+  return (Vol_, V_s, S_n)
 
 def random_point():
   return [U_01() for _ in range(6)]
