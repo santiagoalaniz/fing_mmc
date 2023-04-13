@@ -1,0 +1,221 @@
+<h1 id="i-unidad-3-sesion-7-problemas-de-conteo-ejercicio-7-1">I. Unidad 3 - Sesion 7 - Problemas de Conteo -  Ejercicio 7.1</h1>
+<h1 id="ii-trabajo-individual-">II. Trabajo Individual.</h1>
+<p>Santiago Alaniz, CI 50826476, santiago.alaniz@fing.edu.uy</p>
+<h1 id="iii-descripcion-del-problema">III. Descripcion del Problema</h1>
+<p>Se busca determinar cuántas formas hay de asignar profesores a estudiantes en un programa de posgrado, considerando que deben compartir un idioma en común para comunicarse. Con P profesores, S estudiantes y L lenguajes posibles, se emplea el método Monte Carlo para estimar la cantidad de combinaciones válidas, considerando un número de replicaciones y un nivel de confianza. La salida incluye la estimación del número de combinaciones, la desviación estándar y un intervalo de confianza basado en el criterio de Agresti-Coull.</p>
+<ul>
+<li><p>Parte a) Escribir un programa para realizar el cálculo previamente descrito. Entregar pseudocódigo y código.</p>
+</li>
+<li><p>Parte b) Estudiantes/lenguajes y Profesores/lenguajes dados. Utilizando el programa previamente mencionado y 1000 replicaciones de Monte Carlo, se busca estimar las combinaciones NC de asignación de profesores a estudiantes con un idioma en común y obtener intervalos de confianza de nivel 95%.</p>
+</li>
+<li><p>Parte c) Realizar una adptacion del programa anterior para agregar una nueva restriccion sobre el numero minimo y maximo de estudiantes por profesor.</p>
+</li>
+</ul>
+<h1 id="iv-descripcion-de-la-solucion">IV. Descripcion de la Solucion</h1>
+<p>Este obligatorio fue programado en <strong>Python 3.11</strong>, usando las siguientes librerías:</p>
+<ul>
+<li><strong>datetime</strong>: para medir el tiempo de ejecución.</li>
+<li><strong>math</strong>: para operaciones matemáticas mas complejas.</li>
+<li><strong>pdb</strong>: para depuracion del codigo (no es necesario).</li>
+<li><strong>random</strong>: para generar números aleatorios.</li>
+<li><strong>scipy.stats</strong>: para calcular percentiles de la distribución normal.</li>
+<li><strong>sys</strong>: para obtener argumentos de la linea de comandos.</li>
+</ul>
+<p>Este apartado detalla las soluciones para cada una de las partes.</p>
+<p>Las bases/resultados teoricos que se utilizaron fueron los siguientes:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Monte_Carlo_method">[Metodos Montecarlo] Wikipedia</a></li>
+<li>[Problemas de Conteo] EVA del curso - Unidad 3 - Sesion 7.</li>
+</ul>
+<h2 id="parte-a-">Parte a)</h2>
+<p>Este código implementa un simulador de Monte Carlo para la asignación de profesores y estudiantes basada en los idiomas que hablan. La solucion genera un conjunto aleatorio de profesores, estudiantes y lenguajes, y luego asigna aleatoriamente a los estudiantes a un subconjunto de lenguajes y a los profesores tambien.</p>
+<p>Los valores aleatorios son determinados por una semilla, y se utilizaron los siguientes rangos numericos:</p>
+<ul>
+<li>Lenguajes (L): entre 3 y 6</li>
+<li>Profesores (P): entre 2 y 4</li>
+<li>Estudiantes (S): entre 8 y 16</li>
+<li>Cada profesor/alumno comprende entre 1 y L lenguajes</li>
+</ul>
+<p>Entiendase por configuracion un vector de largo S, cada coordenada del vector es un profesor seleccionado con la funcion random.randint(0, P-1). Y el indice del vector es el estudiante.</p>
+<pre><code><span class="hljs-attr">a</span> = [profesor_x, profesor_y, profesor_z, ...]
+
+<span class="hljs-attr">a[i]</span> = profesor asignado al estudiante i
+</code></pre><p>La probabilidad de ocurrecia de ese vector es la productoria de la ocurrencia de cada profesor para cada alumno, dado que se trata de eventos independientes.</p>
+<p>Cada profesor tiene una probabilidad de 1/P de ser seleccionado. Como se trata de un vector de largo S, la probabilidad de ocurrencia del vector es 1/P^S. Esto concuerda con el paso 2.1 del algoritmo de Monte Carlo presentado en el material de estudio.</p>
+<ul>
+<li><em>Sortear un a e X con probabilidad 1/|X|</em>.</li>
+</ul>
+<p>Luego de generar una configuracion aleatoria, se verifica si cumple con las restricciones. Si cumple, se incrementa el contador de ocurrencias. Si no, se descarta la configuracion y se vuelve a generar una nueva.</p>
+<p>Recordemos que una configuracion es valida si y solo si todos los estudiantes tienen un profesor asignado que hable el mismo idioma que el estudiante. O lo que es lo mismo:</p>
+<pre><code><span class="hljs-function"><span class="hljs-title">idP</span><span class="hljs-params">(a[i])</span></span> interseccion idS[i] != null para todo <span class="hljs-selector-tag">i</span>, <span class="hljs-selector-tag">i</span> = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, ..., S-<span class="hljs-number">1</span>
+</code></pre><p>Finalmente, se calcula el estimador, su desviacion estandar y el intervalo de confianza de Agresti-Coull.</p>
+<pre><code>psedocodigo:
+
+IMPORTAR_LIBRERIAS
+
+<span class="hljs-comment"># [1] Definir constantes y conjuntos</span>
+  P, S, L.
+  idP[i] = {lenguajes que habla el profesor i}
+  idS[j] = {lenguajes que habla el estudiante j}
+
+<span class="hljs-comment"># [2] Definir parámetros de entrada</span>
+
+  <span class="hljs-attr">SAMPLES</span> = OBTENER DE LA CONSOLA <span class="hljs-keyword">else</span> <span class="hljs-number">1000</span>
+  <span class="hljs-attr">DELTA</span> = OBTENER DE CONSOLA <span class="hljs-keyword">else</span> <span class="hljs-number">0.05</span>
+
+<span class="hljs-comment"># [3] Simulacion de Monte Carlo, n = SAMPLES, r = P^S</span>
+
+  <span class="hljs-attr">S_n</span> = <span class="hljs-number">0</span>
+
+  for i <span class="hljs-keyword">in</span> range(n):
+    <span class="hljs-attr">a</span> = configuracion_aleatoria()
+    S_n += <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> is_valid(a) <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>
+
+  <span class="hljs-attr">X_</span> = r * (S_n / n)
+  <span class="hljs-attr">Var_X_</span> = X_ * (r - X_) / (n - <span class="hljs-number">1</span>)
+  <span class="hljs-attr">IC</span> = Agresti_Coull(X_, Var_X_, DELTA)
+  return X_, Var_X_, IC
+
+<span class="hljs-comment"># [4] Funcion Principal</span>
+  initialize()
+  <span class="hljs-attr">r</span> = largo(P) ^ largo(S)
+
+  imprimir montecarlo_simulation(SAMPLES, r)
+  imprimir valores_generados(P,S,L,idP,idS) <span class="hljs-comment"># OPCIONAL</span>
+
+<span class="hljs-comment"># [5] Funciones Auxiliares</span>
+</code></pre><h2 id="parte-b-">Parte b)</h2>
+<p>Para este apartado, se puede reutilizar casi por completo el codigo de la <em>parte a)</em>, la unica diferencia es que las constantes del problema vienen dadas por la letra del problema.</p>
+<p>La funcion <strong>initialize()</strong> se encarga de inicializar las constantes del problema segun como se indica en el enunciado.</p>
+<pre><code>psedocodigo:
+
+importar parte <span class="hljs-keyword">a</span>)
+
+<span class="hljs-comment"># [1] redefinir initialize().</span>
+<span class="hljs-comment"># [2] invocar main() de la parte a).</span>
+</code></pre><h2 id="parte-c-">Parte c)</h2>
+<p>De forma similar a la parte anterior, se puede reutilizar completamente la parte b), simplemente hay que tener en cuenta una restriccion de validez a la configuracion, cada profesor tiene un numero minimo y maximo de estudiantes asignados.</p>
+<pre><code>psedocodigo:
+
+importar parte b)
+
+# [<span class="hljs-number">1</span>] redefinir initialize().
+# [<span class="hljs-number">2</span>] redefinir is_valid().
+# [<span class="hljs-number">3</span>] invocar main() de la parte a).
+</code></pre><h1 id="v-resultados-computacionales">V. Resultados Computacionales</h1>
+<ul>
+<li>Windows 11, Ryzen 7 6800h, 16GB RAM DDR5 4800MHz, 1TB SSD.</li>
+<li>Numero de Semilla: 50826476;</li>
+</ul>
+<h2 id="parte-a-">Parte a)</h2>
+<ul>
+<li>$(~/anexo) python3 exercise_7_1_a.py arg_1: NRO_SAMPLES arg_2: INTERVALO_DELTA arg_3: MOSTRAT_DATOS_GENERADOS</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>delta</th>
+<th>X_</th>
+<th>Var</th>
+<th>IC (Agresti-Coull)</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>0.05</td>
+<td>131.072</td>
+<td>22.808140083533115</td>
+<td>(92.62390241313943, 184.191338567257)</td>
+<td>0:00:00.004734</td>
+</tr>
+<tr>
+<td>10000</td>
+<td>0.05</td>
+<td>138.0352</td>
+<td>7.391840786104413</td>
+<td>(124.24730481318983, 153.28994192930946)</td>
+<td>0:00:00.043097</td>
+</tr>
+<tr>
+<td>100000</td>
+<td>0.05</td>
+<td>130.6624</td>
+<td>2.2762374851568734</td>
+<td>(126.27359968826146, 135.19850212191554)</td>
+<td>0:00:00.427581</td>
+</tr>
+<tr>
+<td>1000000</td>
+<td>0.05</td>
+<td>127.238144</td>
+<td>0.7106183205588165</td>
+<td>(125.85270046752734, 128.63834453093264)</td>
+<td>0:00:04.297136</td>
+</tr>
+<tr>
+<td>10000000</td>
+<td>0.05</td>
+<td>127.9291392</td>
+<td>0.2253068885475855</td>
+<td>(127.4882822749276, 128.37147129913467)</td>
+<td>0:00:43.301886</td>
+</tr>
+</tbody>
+</table>
+<h2 id="parte-b-">Parte b)</h2>
+<ul>
+<li>$(~/anexo) python3 exercise_7_1_b.py 1000 0.05</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>delta</th>
+<th>X_</th>
+<th>Var</th>
+<th>IC (Agresti-Coull)</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>0.05</td>
+<td>128974.848</td>
+<td>10896.060891109579</td>
+<td>(109076.34628120286, 151898.88563653224)</td>
+<td>0:00:00.004276</td>
+</tr>
+</tbody>
+</table>
+<h2 id="parte-c-">Parte c)</h2>
+<ul>
+<li>$(~/anexo) python3 exercise_7_1_c.py</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>delta</th>
+<th>X_</th>
+<th>Var</th>
+<th>IC (Agresti-Coull)</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>0.05</td>
+<td>76546.048</td>
+<td>8630.152425891665</td>
+<td>(61212.735769646475, 95306.16085866356)</td>
+<td>0:00:00.004816</td>
+</tr>
+</tbody>
+</table>
+<h1 id="vi-anexo">VI. Anexo</h1>
+<p>Consultar la carpeta ~/anexo por los logs, capturas, código de la solucion y demás archivos de interés.</p>
