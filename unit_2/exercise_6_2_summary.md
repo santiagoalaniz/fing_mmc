@@ -21,13 +21,82 @@ Se tomó la solución en python debido a que ambos miembros tenían experiencia 
 * En cada iteración generar un vector de 5 dimensiones en vez de 2.
 * Cambiar la función que en el 6.1 obtiene la altura del punto por la función de la que se quiere calcular la integral.
 
+```python
+def F(x1, x2, x3, x4, x5): return x1 * x2 ** 2 * x3 ** 3 * x4 ** 4 * x5 ** 5
+
+def montecarlo_simulation(n: int):
+    # Initialize the variables
+    S = 0
+    T = 0
+
+    for i in range(n):
+        # Random point generator using uniform distribution U(0,1)
+        x_j = random_point()
+        # Evaluate function value
+        F_x_y = F(*x_j)
+
+        T += (1 - (1/i)) * ((F_x_y - (S/(i-1))) ** 2) if i > 1 else 0
+        S += F_x_y
+
+    Int_ = (S / n)
+    Var_F = T / (n - 1)
+    Var_Int_ = Var_F / n
+    IC_Normal = (Int_ - i_norm_95 * math.sqrt(Var_Int_),
+                 Int_ + i_norm_95 * math.sqrt(Var_Int_))
+
+    return (Int_, Var_Int_, IC_Normal, Var_F)
+
+
+def random_point():
+    return [U_01() for _ in range(5)]
+```
+
 Luego para el calculo analitico simplemente se utilizo la biblioteca scipy que ofrece la funcionalidad de calcular integrales, se encadenó el llamado de esa función para integrar en [0,1] en dx_1, dx_2, dx_3, dx_4 y dx_5.
+```python
+analytic_value = quad(lambda x1:
+                      quad(lambda x2:
+                           quad(lambda x3:
+                                quad(lambda x4:
+                                     quad(lambda x5: 
+                                        F(x1, x2, x3, x4, x5),
+                                     0, 1)[0],
+                                0, 1)[0], 
+                           0, 1)[0], 
+                      0, 1)[0], 
+                 0, 1)[0]
+```
+
 
 ## Parte b)
 Se realizó lo mismo que en el ejercicio 6.1 pero con una cota de error distinta.
+```python
+def number_of_replications_normal(punctual_variance: float):
+    i_norm_delta = i_norm(1 - (DELTA / 2))
+    sqr_epsilon = EPSILON ** 2
+    return math.ceil((((i_norm_delta ** 2) * punctual_variance) / sqr_epsilon))
+```
 
 ## Parte c)
 Para esta parte se modificó un poco el código de la última parte del 6.1 agregando el cálculo de los intervalos de confianza deseados 90%, 95%, 99% y agregando un loop que ejecute ese código 500 veces.
+```python
+for i in range(500):
+		# different seed per iteration
+        reset_seed(i)
+        (Int_, Var_Int_, IC_Normal, Var) = montecarlo_simulation(n=nN)
+        # 95%
+        if IC_Normal[0] <= analytic_value <= IC_Normal[1]:
+            cubre_valor_95 += 1
+        # 90%
+        IC_Normal = (Int_ - i_norm_90 * math.sqrt(Var_Int_),
+                     Int_ + i_norm_90 * math.sqrt(Var_Int_))
+        if IC_Normal[0] <= analytic_value <= IC_Normal[1]:
+            cubre_valor_90 += 1
+        # 99%
+        IC_Normal = (Int_ - i_norm_99 * math.sqrt(Var_Int_),
+                     Int_ + i_norm_99 * math.sqrt(Var_Int_))
+        if IC_Normal[0] <= analytic_value <= IC_Normal[1]:
+            cubre_valor_99 += 1
+```
 
 # V. Resultados Computacionales
 
@@ -51,11 +120,11 @@ A partir de la aproximación normal obtuvimos:
 * epsilon: 0.0001
 
 ## Parte c)
-Para las 500 iteraciones con distintas semillas encontramos que todos los intervalos de confianza cubren el valor analitico de la integral, entendemos que esto se debe a que realizamos previamente el cálculo del mínimo número de replicaciones que nos daban ciertas garantías. 
+Para la las 500 iteraciones se obtuvieron distintos resultados segun el intervalo de confianza deseado, consideramos que tiene sentido ya que a medida que se calcula un intervalo de confianza con mayor porcentaje tienden a cubrir mas veces el valor real.
 
-Además los intervalos de confianza ofrecen un intervalo en el que la gran mayoría de estimaciones quedan dentro (con ese error) del mismo entonces es de esperar que para garantizar eso (dado buenas estimaciones) cubran el valor real.
-
-Por último, otra cosa que creemos influyó es que el número inicial de replicaciones es mucho mayor al mínimo de replicaciones que garantizan 95% de confianza con error 0.0001 de cota de error, ese número de replicaciones tanto mayor nos hace confiar más en el nN.
+| 90% | 95% | 99% |
+|:--:|:-----:|:-------:|
+| 87.4% | 93.6%  | 98.8%   |
 
 # VI. Anexo
 

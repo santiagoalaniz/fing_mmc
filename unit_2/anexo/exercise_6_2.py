@@ -46,8 +46,8 @@ def main():
     cubre_valor_90 = 0
     cubre_valor_95 = 0
     cubre_valor_99 = 0
-    for _ in range(500):
-        reset_seed(1)
+    for i in range(500):
+        reset_seed(i)
         (Int_, Var_Int_, IC_Normal, Var) = montecarlo_simulation(n=nN)
         # 95%
         if IC_Normal[0] <= analytic_value <= IC_Normal[1]:
