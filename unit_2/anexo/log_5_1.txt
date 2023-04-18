@@ -2,6 +2,7 @@
 eps=0.0001, delta=0.05, nH=184443973
 n = 184443973, S_n = 52036, Vol_ = 0.00028212361268101726, Var = 1.5291582364545105e-12, BOUNDARIES = True, time = 0:04:04.174310
 
-➜  anexo git:(unit_2) ✗ python3 exercise_5_1.py
-Chebyshev Interval of Confidence: [0.0002818472378764687, 0.00028240025841763693]
-Agresti-Coull Interval of Confidence: [0.00027971030119931805, 0.00028455773965018285]
+CORRECCIONES
+➜  anexo git:(main) ✗ python3 exercise_5_1.py
+Chebyshev Interval of Confidence: [0.000225189175518092, 0.0003808607941794094]
+Agresti-Coull Interval of Confidence: [0.0002707000568436197, 0.00033913905930522254]

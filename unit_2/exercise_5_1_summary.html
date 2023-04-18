@@ -1,0 +1,173 @@
+<h1 id="i-unidad-2-sesi-n-5-ejercicio-5-1">I. Unidad 2 - Sesión 5 -  Ejercicio 5.1</h1>
+<h1 id="ii-trabajo-grupal-">II. Trabajo Grupal.</h1>
+<p>Santiago Alaniz, CI 50826476, santiago.alaniz@fing.edu.uy
+Bruno De Simone, CI 49145550, bruno.de.simone@fing.edu.uy</p>
+<h1 id="iii-descripci-n-del-problema">III. Descripción del Problema</h1>
+<pre><code><span class="hljs-selector-tag">Problema</span> (<span class="hljs-selector-tag">enunciado</span> <span class="hljs-selector-tag">en</span> <span class="hljs-selector-tag">sesi</span>ó<span class="hljs-selector-tag">n</span> 3, <span class="hljs-selector-tag">ejercicio</span> 3<span class="hljs-selector-class">.1</span>): <span class="hljs-selector-tag">Se</span> <span class="hljs-selector-tag">desea</span> <span class="hljs-selector-tag">estimar</span> <span class="hljs-selector-tag">el</span> <span class="hljs-selector-tag">volumen</span> <span class="hljs-selector-tag">de</span> <span class="hljs-selector-tag">una</span> <span class="hljs-selector-tag">regi</span>ó<span class="hljs-selector-tag">n</span> <span class="hljs-selector-tag">R</span> <span class="hljs-selector-tag">en</span> <span class="hljs-selector-attr">[0,1]</span>^6 <span class="hljs-selector-tag">definida</span> <span class="hljs-selector-tag">por</span> <span class="hljs-selector-tag">todos</span> <span class="hljs-selector-tag">los</span> <span class="hljs-selector-tag">puntos</span> <span class="hljs-selector-tag">de</span> <span class="hljs-selector-tag">la</span> <span class="hljs-selector-tag">hiperesfera</span> <span class="hljs-selector-tag">de</span> <span class="hljs-selector-tag">centro</span> (0<span class="hljs-selector-class">.45</span>, 0<span class="hljs-selector-class">.5</span>, 0<span class="hljs-selector-class">.6</span>, 0<span class="hljs-selector-class">.6</span>, 0<span class="hljs-selector-class">.5</span>, 0<span class="hljs-selector-class">.45</span>) <span class="hljs-selector-tag">y</span> <span class="hljs-selector-tag">radio</span> 0<span class="hljs-selector-class">.35</span> <span class="hljs-selector-tag">que</span> <span class="hljs-selector-tag">adem</span>á<span class="hljs-selector-tag">s</span> <span class="hljs-selector-tag">cumplan</span> <span class="hljs-selector-tag">las</span> <span class="hljs-selector-tag">siguientes</span> <span class="hljs-selector-tag">restricciones</span>: 3<span class="hljs-selector-tag">x1</span> + 7<span class="hljs-selector-tag">x4</span> ≤ 5; <span class="hljs-selector-tag">x3</span> + <span class="hljs-selector-tag">x4</span> ≤ 1; <span class="hljs-selector-tag">x1</span> <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">x2</span> <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">x5</span> + <span class="hljs-selector-tag">x6</span> ≥ 0.
+</code></pre><ul>
+<li><p><strong>Parte a</strong>: Compartir en el grupo los códigos desarrollados para la parte a, validarlos revisando los códigos y verificando si las salidas para tamaños de muestra de 10^6 son consistentes. Indicar si se detectaron errores en los mismos, y en ese caso dar los códigos corregidos. Elegir uno de los códigos para las partes siguientes, explicando los motivos de la selección.</p>
+</li>
+<li><p><strong>Parte b</strong>: Calcular la cantidad de replicaciones necesarias para garantizar un error menor a 1.0 × 10^-4 con una probabilidad del 0.95, utilizando el criterio de peor caso de Hoeffding.</p>
+</li>
+<li><p><strong>Parte c</strong>: Utilizando el código elegido en la parte a y la cantidad de replicaciones definida en el punto anterior, calcular el intervalo de confianza de nivel 0.95 utilizando el criterio de Chebyshev y el criterio de Agresti-Coull. Comparar el ancho de estos intervalos entre sí y con el criterio de error manejado en el punto previo.</p>
+</li>
+</ul>
+<h1 id="iv-descripci-n-de-la-soluci-n">IV. Descripción de la Solución</h1>
+<h2 id="parte-a-">Parte a)</h2>
+<p>Los algoritmos implementados por cada uno son prácticamente iguales y arrojan resultados similares, la diferencia es dada por la semilla y generador. Se decidió continuar con la implementación en python ya que ambos miembros están familiarizados con el lenguaje, cosa que no sucede con rust.</p>
+<p>Ejecución para n=10^6 de ambas implementaciones:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Lenguaje</th>
+<th style="text-align:center">Estimación</th>
+<th style="text-align:center">Varianza</th>
+<th style="text-align:center">Tiempo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Python</td>
+<td style="text-align:center">0.000303</td>
+<td style="text-align:center">3.029085e-10</td>
+<td style="text-align:center">2.85s</td>
+</tr>
+<tr>
+<td style="text-align:center">Rust</td>
+<td style="text-align:center">0.00028</td>
+<td style="text-align:center">2.799219e-10</td>
+<td style="text-align:center">47.47ms</td>
+</tr>
+</tbody>
+</table>
+<h2 id="parte-b-">Parte b)</h2>
+<p>En esta sección se utiliza el criterio de Hoeffding para calcular la cantidad de replicaciones necesarias que garantizan un error menor a 1.0 × 10^-4 con una probabilidad del 0.95.</p>
+<p>En la sección 4.1 se emplean varios métodos (Chebyshev, Normal, Hoeffding) para calcular el tamaño de muestra necesario para unos valores dados delta y epsilon.</p>
+<p>Para calcular el tamaño de muestra necesario en esta parte del obligatorio, se reutiliza el código de la sección 3.1 y se llama a la función n_of_samples_hoeffding con los valores correspondientes de delta y epsilon:</p>
+<pre><code>  <span class="hljs-keyword">IMPORT</span> n_of_samples_hoeffding from exercise_3_1
+
+  DELTA = <span class="hljs-number">0.05</span>
+  <span class="hljs-built_in">EPSILON</span> = <span class="hljs-number">0.0001</span>
+
+  n_of_samples_hoeffding(<span class="hljs-built_in">EPSILON</span>, DELTA)
+</code></pre><h2 id="parte-c-">Parte c)</h2>
+<p>En esta sección se reutiliza código de partes anteriores, en particular de la <strong>Sección 3.1</strong>, utilizando la función <strong>montecarlo_simulation</strong> con el número de replicaciones calculado en la <strong>parte b)</strong>.</p>
+<p>Sin embargo, se ha modificado levemente el código elegido en la <strong>parte a</strong>), ya que la función <strong>montecarlo_simulation</strong> original no devolvía el número de puntos que pertenecen a la región de interés (<strong>S_n</strong>), lo cual es necesario para los cálculos siguientes.</p>
+<p>Todo lo descrito hasta ahora forma parte de la etapa de pre computo. Una vez obtenidos los resultados, es decir, el valor de n_H y S_n_H, se procede a calcular los intervalos de confianza.</p>
+<p>Esto entra en concordancia con los requisitos a la hora de calcular intervalos de confianza.</p>
+<pre><code><span class="hljs-comment">"En estos casos, en general se plantea el problema inverso: conociendo el tamaño de muestra n previamente establecido, y dado un nivel de confianza deseado, ¿qué precisión podemos asignar al resultado obtenido a partir de los resultados de las replicaciones simuladas?"</span>
+</code></pre><p>Los resultados arrojados para los intervalos de confianza pueden ser confusos a primera vista, ya que el intervalo de confianza de Chebyshev puede parecer más estrecho que el de Agresti-Coull.</p>
+<p>Sin embargo, en este caso particular, el intervalo de confianza de Agresti-Coull es más amplio que el de Chebyshev (ver V. resultados computacionales), lo que indica que es más conservador.</p>
+<p>Es importante destacar que el intervalo de Agresti-Coull puede ser más conservador (es decir, más amplio) que otros intervalos de confianza, especialmente cuando la proporción de éxitos es cercana a 0 o 1, lo cual es el caso en este ejercicio. Por lo tanto, es importante evaluar cuidadosamente las características de la muestra y del objetivo del análisis para seleccionar el método de intervalo de confianza más adecuado.</p>
+<pre><code class="lang-python">def chebyshev_interval_of_confidence(<span class="hljs-attr">z=int,</span> <span class="hljs-attr">n=int,</span> <span class="hljs-attr">beta=float):</span>
+  <span class="hljs-attr">a</span> = z + (DELTA / <span class="hljs-number">2</span>)
+  <span class="hljs-attr">b</span> = beta * math.sqrt((DELTA / <span class="hljs-number">4</span>) + (z * (n - z) / n))
+  <span class="hljs-attr">divident</span> = n + DELTA
+
+  <span class="hljs-attr">ic_lower</span> = (a - b) / divident
+  <span class="hljs-attr">ic_upper</span> = (a + b) / divident
+
+  return (ic_lower, ic_upper)
+
+def agresti_coull_interval_of_confidence(<span class="hljs-attr">n_s=int,</span> <span class="hljs-attr">n=int,</span> <span class="hljs-attr">delta=float):</span>
+  <span class="hljs-attr">z</span> = inversed_norm(<span class="hljs-number">1</span> - (delta / <span class="hljs-number">2</span>))
+  <span class="hljs-attr">sqr_z</span> = z ** <span class="hljs-number">2</span>
+  <span class="hljs-attr">n_</span> = n + (sqr_z)
+  <span class="hljs-attr">p_</span> = (<span class="hljs-number">1</span> / n_) * (n_s + (sqr_z / <span class="hljs-number">2</span>))
+  <span class="hljs-attr">ic_constant</span> = (z * math.sqrt((p_ / n_) * (<span class="hljs-number">1</span> - p_)))
+
+  <span class="hljs-attr">ic_lower</span> = p_ - ic_constant
+  <span class="hljs-attr">ic_upper</span> = p_ + ic_constant
+
+  return (ic_lower, ic_upper)
+</code></pre>
+<h2 id="bases-te-ricas">Bases Teóricas</h2>
+<ul>
+<li>Cálculo de intervalos de confianza, Unidad 2, Sesión 5.</li>
+<li>Intervalo Agresti-Coull, <a href="https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti%E2%80%93Coull_interval">https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Agresti%E2%80%93Coull_interval</a></li>
+<li>Interval Estimation for a Binomial Proportion, Lawrence D. Brown, T. Tony Cai and Anirban DasGupta</li>
+</ul>
+<h1 id="v-resultados-computacionales">V. Resultados Computacionales</h1>
+<ol>
+<li>MacBook Air, Apple M1, 2020, 8GB RAM, ptython 3.11.2</li>
+<li>Semilla:<ul>
+<li>50826476 (utilizada en exercise_3_1.py)</li>
+</ul>
+</li>
+<li>$(anexo) python3 exercise_5_1.py LINEAR (#para generar los resultados pre-computados, ver anexo)</li>
+<li>$(anexo) python3 exercise_5_1.py (para generar los intervalos de confianza si decide no reutilizar los resultados pre-computados)</li>
+</ol>
+<h2 id="parte-b-">Parte b)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Epsilon</th>
+<th style="text-align:center">Delta</th>
+<th style="text-align:center">n_H (Hoeffding)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0.0001</td>
+<td style="text-align:center">0.05</td>
+<td style="text-align:center">184443973</td>
+</tr>
+</tbody>
+</table>
+<h2 id="parte-c-">Parte c)</h2>
+<h3 id="estimaci-n-de-volumen-con-n-n_h-de-la-parte-b-">Estimación de Volumen con n=n_H de la Parte b)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">n</th>
+<th style="text-align:center">S_n</th>
+<th style="text-align:center">Vol_</th>
+<th style="text-align:center">Var</th>
+<th style="text-align:center">BOUNDARIES</th>
+<th style="text-align:center">time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">184443973</td>
+<td style="text-align:center">52036</td>
+<td style="text-align:center">0.00028212361268101726</td>
+<td style="text-align:center">1.5291582364545105e-12</td>
+<td style="text-align:center">True</td>
+<td style="text-align:center">0:04:04.174310</td>
+</tr>
+</tbody>
+</table>
+<h3 id="intervalos-chebyshev-y-agresti-coull">Intervalos Chebyshev y Agresti-Coull</h3>
+<table>
+<thead>
+<tr>
+<th>Intervalo de Confianza</th>
+<th>Valor Inferior</th>
+<th>Valor Superior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intervalo de Confianza Chebyshev</td>
+<td>0.000225189175518092</td>
+<td>0.0003808607941794094</td>
+</tr>
+<tr>
+<td>Intervalo de Confianza Agresti-Coull</td>
+<td>0.0002707000568436197</td>
+<td>0.00033913905930522254</td>
+</tr>
+</tbody>
+</table>
+<h1 id="vi-anexo">VI. Anexo</h1>
+<p>Consultar la carpeta ~/anexo por los logs, capturas, código de la solución y demás archivos de interés.</p>
+<h1 id="vii-correcciones-y-aclaraciones">VII. Correcciones y Aclaraciones</h1>
+<p>Despues de ser solicitada la re-entrega de este ejercicio, se han realizado las siguientes correcciones:</p>
+<ul>
+<li><p>&quot;El log entregado para la parte c es distinto de los valores entregados en el informe (los valores numéricos de los IC).&quot; (corregido, ver anexo y resultados computacionales)</p>
+</li>
+<li><p>&quot;En principio lo esperado es que el IC de Chebyshev sea más ancho que el de Agresti-Coull.&quot; Se estaba pasando mal el parametro beta en la funcion <strong>chebyshev_interval_of_confidence(z,n,beta)</strong>. <em>*beta</em> cambio de sqrt(DELTA) a 1/sqrt(DELTA)*.</p>
+</li>
+</ul>
+<p>Este cambio implico que los resultados fueran los esperados respecto a lo leido en el material de apoyo. Esto es que el IC de Chebyshev es mas ancho que el de Agresti-Coull. (corregido, ver anexo y resultados computacionales)</p>

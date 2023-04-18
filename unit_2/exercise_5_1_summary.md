@@ -22,10 +22,10 @@ Los algoritmos implementados por cada uno son prácticamente iguales y arrojan r
 
 Ejecución para n=10^6 de ambas implementaciones:
 
-| Lenguaje| Estimación | Varianza     | Tiempo   |    
+| Lenguaje| Estimación | Varianza     | Tiempo   |
 |:-------:|:----------:|:------------:|:--------:|
-| Python  | 0.000303   | 3.029085e-10 | 2.85s    |   
-| Rust    | 0.00028    | 2.799219e-10 | 47.47ms  |  
+| Python  | 0.000303   | 3.029085e-10 | 2.85s    |
+| Rust    | 0.00028    | 2.799219e-10 | 47.47ms  |
 
 ## Parte b)
 En esta sección se utiliza el criterio de Hoeffding para calcular la cantidad de replicaciones necesarias que garantizan un error menor a 1.0 × 10^-4 con una probabilidad del 0.95.
@@ -115,12 +115,21 @@ def agresti_coull_interval_of_confidence(n_s=int, n=int, delta=float):
 
 ### Intervalos Chebyshev y Agresti-Coull
 
-| Intervalo de Confianza (n, S_n, delta=0.05) |     Límite Inferior    |     Límite Superior    |
-|:----------------------:|:----------------------:|:----------------------:|
-| Chebyshev              | 0.00029913319438221777 | 0.00030691677531528367 |
-| Agresti-Coull          | 0.0002707000568436197  | 0.00033913905930522254 |
+| Intervalo de Confianza | Valor Inferior | Valor Superior |
+|------------------------|-----------------|------------------|
+| Intervalo de Confianza Chebyshev | 0.000225189175518092 | 0.0003808607941794094 |
+| Intervalo de Confianza Agresti-Coull | 0.0002707000568436197 | 0.00033913905930522254 |
 
-Se observa que ambos teoremas generan intervalos de menor amplitud que la cota de error máxima tolerada.
 # VI. Anexo
 
 Consultar la carpeta ~/anexo por los logs, capturas, código de la solución y demás archivos de interés.
+
+# VII. Correcciones y Aclaraciones
+
+Despues de ser solicitada la re-entrega de este ejercicio, se han realizado las siguientes correcciones:
+
+- "El log entregado para la parte c es distinto de los valores entregados en el informe (los valores numéricos de los IC)." (corregido, ver anexo y resultados computacionales)
+
+- "En principio lo esperado es que el IC de Chebyshev sea más ancho que el de Agresti-Coull." Se estaba pasando mal el parametro beta en la funcion **chebyshev_interval_of_confidence(z,n,beta)**. **beta* cambio de sqrt(DELTA) a 1/sqrt(DELTA)*.
+
+Este cambio implico que los resultados fueran los esperados respecto a lo leido en el material de apoyo. Esto es que el IC de Chebyshev es mas ancho que el de Agresti-Coull. (corregido, ver anexo y resultados computacionales)

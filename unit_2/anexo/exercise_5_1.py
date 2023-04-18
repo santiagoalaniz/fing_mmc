@@ -28,7 +28,7 @@ def main():
 
   # print(f"n = {nH}, S_n = {S_n}, Vol_ = {Vol_}, Var = {Var_s}, BOUNDARIES = {INCLUDE_BOUNDARIES}, time = {elapsed_time}")
 
-  (ic_C_lower, ic_C_upper) = chebyshev_interval_of_confidence(z=S_nH, n=nH, beta=math.sqrt(DELTA))
+  (ic_C_lower, ic_C_upper) = chebyshev_interval_of_confidence(z=S_nH, n=nH, beta=(1/math.sqrt(DELTA)))
   print(f'Chebyshev Interval of Confidence: [{ic_C_lower}, {ic_C_upper}]')
 
   (ic_AC_lower, ic_AC_upper) = agresti_coull_interval_of_confidence(n_s=S_nH, n=nH, delta=DELTA)
