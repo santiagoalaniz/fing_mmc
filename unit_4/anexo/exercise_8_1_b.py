@@ -1,16 +1,13 @@
 import random
 import datetime
 import sys
+import pandas as pd
 
 # Set linear boundaries by command line
 INCLUDE_BOUNDARIES = True if len(sys.argv) > 1 else False
 
-# Seed number for the random number generator reproducibility
-SEED_NUMBER = 50826476
-random.seed(SEED_NUMBER)
-
 # Number of samples
-SAMPLES = [10000, 1000000]
+SAMPLES = [10000, 1000000, 100000]
 
 # 6_th dimension sphere.
 SPHERE = {
@@ -39,13 +36,18 @@ def main():
 
 
 def montecarlo_simulation(n: int):
+    # Seed number for the random number generator reproducibility
+    SEED = (2, 7)
     # Initialize the variables
     S_n = 0
     V_s = 0
 
+    df = pd.read_fwf('utils/RAND_true_random_numbers.txt', header=None)
+    df = df.drop(columns=[0])
+
     for i in range(n):
         # generador de la distribución uniforme
-        x_j = random_point()
+        (SEED, x_j) = random_point(df, SEED)
 
         # Si el punto está en la región, incrementar S_n
         S_n = S_n + 1 if point_in_region(x_j) else S_n
@@ -56,8 +58,26 @@ def montecarlo_simulation(n: int):
     return (Vol_, V_s, S_n)
 
 
-def random_point():
-    return [U_01() for _ in range(6)]
+def random_point(df, SEED):
+    x_j = []
+    for i in range(6):
+        (row, col) = SEED
+        # Get a random row from the file
+        columna = df[col]
+        # Get the values of the row
+        value = columna[row]
+        # Add the value to x_j
+        x_j.append(value/100000)
+        # Update the Seed
+        if len(df.index) - 1 == row:
+            if len(df.columns) == col:
+                SEED = (0, 1)
+            else:
+                SEED = (0, col + 1)
+        else:
+            SEED = (row+1, col)
+
+    return (SEED, x_j)
 
 
 def U_01():

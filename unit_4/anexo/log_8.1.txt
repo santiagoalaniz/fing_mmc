@@ -1,0 +1,3 @@
+n = 10000, Sn = 1, Vol_ = 0.0001, Var = 1e-08, time = 0:00:00.584195, BOUNDARIES = True
+n = 1000000, Sn = 250, Vol_ = 0.00025, Var = 2.4993774993774993e-10, time = 0:00:40.763934, BOUNDARIES = True
+n = 100000, Sn = 25, Vol_ = 0.00025, Var = 2.49939999399994e-09, time = 0:00:04.256997, BOUNDARIES = True
