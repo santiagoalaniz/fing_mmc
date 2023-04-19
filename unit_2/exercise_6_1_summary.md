@@ -1,6 +1,6 @@
 # I. Unidad 2 - Sesion 6 -  Ejercicio 6.1
 
-# II. Trabajo Grupal.
+# II. Trabajo Individual.
 
 Santiago Alaniz, CI 50826476, santiago.alaniz@fing.edu.uy
 
