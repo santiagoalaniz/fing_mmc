@@ -1,0 +1,19 @@
+➜  montecarlo_exercises git:(unit_4_session_11) ✗ python3 unit_4/anexo/utils/exercise_6_1_redo.py
+n = 1000000, Int_ = 1.3421821369141125, Var = 3.5752838518382004e-06, IC_Normal = (1.3384761544952215, 1.3458881193330035), Diff = 0.0017692713824672968, time = 0:00:00.770270
+➜  montecarlo_exercises git:(unit_4_session_11) ✗ python3 unit_4/anexo/exercise_11_1.py
+n = 1000000, Int_ = 1.3387230133412285, Var = 3.5483240767543015e-06, IC_Normal = (1.3350310300228305, 1.3424149966596264), Diff = 0.0016898521904167296, time = 0:00:00.893996
+
+➜  montecarlo_exercises git:(unit_4_session_11) ✗ python3 unit_4/anexo/utils/exercise_6_1_redo.py
+n = 100000, Int_ = 1.340400911082936, Var = 3.5853824374540735e-05, IC_Normal = (1.3286650263740956, 1.3521367957917765), Diff = 1.1954448709161625e-05, time = 0:00:00.078558
+➜  montecarlo_exercises git:(unit_4_session_11) ✗ python3 unit_4/anexo/exercise_11_1.py
+n = 100000, Int_ = 1.3407402620527458, Var = 3.556585273954382e-05, IC_Normal = (1.3290516026462171, 1.3524289214592744), Diff = 0.0003273965211005869, time = 0:00:00.089637
+
+➜  montecarlo_exercises git:(unit_4_session_11) ✗ python3 unit_4/anexo/utils/exercise_6_1_redo.py
+n = 10000, Int_ = 1.3481004953740965, Var = 0.00036212664999194205, IC_Normal = (1.310803114583752, 1.385397876164441), Diff = 0.0076876298424513045, time = 0:00:00.007759
+➜  montecarlo_exercises git:(unit_4_session_11) ✗ python3 unit_4/anexo/exercise_11_1.py
+n = 10000, Int_ = 1.3354770751931735, Var = 0.0003548754463156493, IC_Normal = (1.298555003020867, 1.37239914736548), Diff = 0.004935790338471691, time = 0:00:00.009564
+
+➜  montecarlo_exercises git:(unit_4_session_11) ✗ python3 unit_4/anexo/utils/exercise_6_1_redo.py
+n = 1000, Int_ = 1.4061802260107892, Var = 0.0038555227086827467, IC_Normal = (1.2844804654619046, 1.5278799865596737), Diff = 0.065767360479144, time = 0:00:00.001361
+➜  montecarlo_exercises git:(unit_4_session_11) ✗ python3 unit_4/anexo/exercise_11_1.py
+n = 1000, Int_ = 1.3974097955772777, Var = 0.003674672218898557, IC_Normal = (1.2785985923662695, 1.516220998788286), Diff = 0.056996930045632554, time = 0:00:00.001152

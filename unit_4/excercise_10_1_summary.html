@@ -1,0 +1,164 @@
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f4f4;
+      margin: 20px;
+      padding: 0;
+    }
+
+    pre {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 15px;
+      overflow-x: auto;
+    }
+
+    code.lang-python {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 1em;
+      color: #333;
+    }
+
+    h1, h2, h3, h4 {
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #333;
+      text-decoration: underline;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: auto;
+      padding: 0 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3498db;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f4f4f4;
+    }
+
+  </style>
+</head>
+<body>
+<h1 id="i-unidad-4-sesi-n-11-sorteo-de-variables-con-distribucion-arbitraria-ejercicio-11-1">I. Unidad 4 - Sesión 11 - Sorteo de Variables con distribucion arbitraria -  Ejercicio 11.1</h1>
+<h1 id="ii-trabajo-individual-">II. Trabajo Individual.</h1>
+<ul>
+<li>Santiago Alaniz, CI 50826476, santiago.alaniz@fing.edu.uy</li>
+</ul>
+<h1 id="iii-descripci-n-del-problema">III. Descripción del Problema</h1>
+<p>Resumir en un texto (de entre media y una carilla) los principales contenidos del paper de P. L&#39;Ecuyer, &quot;Software for uniform random number generation: distinguishing the good and the bad&quot;.</p>
+<h1 id="iv-resumen-de-la-soluci-n">IV. Resumen de la Solución</h1>
+<h2 id="pregunta-a-cual-es-el-objetivo-del-trabajo-">Pregunta a) - Cual es el objetivo del trabajo?</h2>
+<p>El objetivo de este trabajo es presentar distintos mecanismos para validar la calidad de los generadores de numeros aleatorios. Para esto se presentan distintos criterios de calidad, diferentes familias de gneradores, luego, se presentan diversos generadores de programas comerciales / lenguaes de programacion y se los evalua con los criterios presentados.</p>
+<h2 id="pregunta-b-que-generadores-de-numeros-aleatorios-se-presentan-">Pregunta b) - Que generadores de numeros aleatorios se presentan?</h2>
+<p>1.<strong>Recurrencia Lineal:</strong> Este es un tipo de generador de números aleatorios que utiliza una ecuación lineal para generar la próxima entrada en una secuencia. La ecuación toma la forma <code>x_i = (a * x_(i-1) + c) mod m</code>, donde <code>a</code>, <code>c</code> y <code>m</code> son constantes.</p>
+<p>2.<strong>Congruencial Lineal (LCG):</strong> Estos son una clase de generadores de números pseudoaleatorios que operan al generar una secuencia de números a través de la siguiente fórmula recursiva: <code>X_(n+1) = (a*X_n + c) mod m</code>. Los LCG son rápidos y requieren muy poca memoria, lo que los hace adecuados para simulaciones donde se requiere una gran cantidad de números aleatorios.</p>
+<p>4.<strong>Generador Múltiple de Recurrencia (MRG):</strong> Un tipo de generador de números aleatorios que combina las salidas de múltiples generadores de recurrencia lineal para producir una secuencia de números que tiene un período más largo y una calidad mejorada de aleatoriedad en comparación con los generadores individuales.</p>
+<p>5.<strong>Twisted Generalized Feedback:</strong> Estos son una clase de generadores de números aleatorios que utilizan operaciones de bit para generar números. El más famoso de estos es el Mersenne Twister, que tiene un período extremadamente largo y pasa muchas pruebas de aleatoriedad.</p>
+<h3 id="generadores-propuestos-en-el-paper-">Generadores propuestos en el paper.</h3>
+<table>
+<thead>
+<tr>
+<th>Generador</th>
+<th>Clase del generador</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td>Recurrencia Lineal</td>
+</tr>
+<tr>
+<td>VB</td>
+<td>Congruencial Lineal (LCG)</td>
+</tr>
+<tr>
+<td>Excel</td>
+<td>Congruencial Lineal (LCG)</td>
+</tr>
+<tr>
+<td>LCG16807</td>
+<td>Congruencial Lineal (LCG)</td>
+</tr>
+<tr>
+<td>MRG32k3a</td>
+<td>Generador Múltiple de Recurrencia (MRG)</td>
+</tr>
+<tr>
+<td>MT19937</td>
+<td>Twisted Generalized Feedback Shift Register (TGFSR)</td>
+</tr>
+</tbody>
+</table>
+<p>-<code>Java</code>: La clase java.util.Random utiliza un generador de recurrencia lineal con longitud de periodo 2^48. Sin embargo, cada valor de salida se construye tomando dos valores sucesivos de la recurrencia lineal de la siguiente manera:</p>
+<pre><code>  xi+<span class="hljs-number">1</span> = (<span class="hljs-number">25214903917</span> * xi + <span class="hljs-number">11</span>) mod <span class="hljs-number">2</span>^<span class="hljs-number">48</span>
+  ui = (<span class="hljs-number">227</span> * floor(xi/<span class="hljs-number">2</span>^<span class="hljs-number">22</span>) + floor(xi+<span class="hljs-number">1</span>/<span class="hljs-number">2</span>^<span class="hljs-number">21</span>)) / <span class="hljs-number">2</span>^<span class="hljs-number">53</span>
+</code></pre><p>-<code>Microsoft Visual Basic</code>: Es un generador congruencial lineal con longitud de período 2^24, definido por:</p>
+<pre><code>  xi = (<span class="hljs-number">1140671485</span> * xi<span class="hljs-number">-1</span> + <span class="hljs-number">12820163</span>) mod <span class="hljs-number">2</span>^<span class="hljs-number">24</span>
+  ui = xi / <span class="hljs-number">2</span>^<span class="hljs-number">24</span>
+</code></pre><p>-<code>Excel</code>: Es un generador congruencial lineal (LCG), excepto que su recurrencia, se implementa directamente para los ui en aritmética de punto flotante. La longitud de su período en realidad depende de la precisión numérica de los números de punto flotante utilizados para la implementación. Esto no se indica en la documentación y no está claro cuál es. Los autores utilizaron un archivo con numeros aleatorios generados por Excel.</p>
+<pre><code>  ui = (<span class="hljs-number">9821.0</span> * ui<span class="hljs-number">-1</span> + <span class="hljs-number">0.211327</span>) mod <span class="hljs-number">1</span>
+</code></pre><p>-<code>LCG16807</code>: LCG16807 es un generador congruencial lineal (LCG). Tiene una longitud de período de 2^31 - 2 y fue propuesto originalmente por Lewis, Goodman y Miller en 1969. Este LCG ha sido ampliamente utilizado en muchas bibliotecas de software para estadísticas, simulación, optimización, etc., así como en bibliotecas de sistemas operativos.:</p>
+<pre><code>  xi = <span class="hljs-number">16807</span>xi<span class="hljs-number">-1</span> mod (<span class="hljs-number">2</span>^<span class="hljs-number">31</span> - <span class="hljs-number">1</span>),
+  ui = xi/(<span class="hljs-number">2</span>^<span class="hljs-number">31</span> - <span class="hljs-number">1</span>),
+</code></pre><p>-<code>MRG32k3a</code>: Un generador propuesto por el autor, comina dos MRGs de orden 3 y tiene periodo cercano a 2^191.</p>
+<p>-<code>MT19937</code>: Generador a base de un primo de Mersenne con un periodo enorme de 2^199936 - 1.</p>
+<h1 id="cuales-son-los-hallazgos-mas-importantes-que-conclusiones-y-recomendaciones-se-presentan-">Cuales son los hallazgos mas importantes? Que conclusiones y recomendaciones se presentan?</h1>
+<p>El autor plantea dos tests para asegurar la calidad de estos generadores.</p>
+<ul>
+<li><p>Collision Test: Es una prueba que busca determinar si dos o más números generados aleatoriamente son iguales o &quot;colisionan&quot;. El test de colisión es especialmente útil para probar generadores de números pseudoaleatorios, ya que estos generadores utilizan algoritmos deterministas para generar números &quot;aleatorios&quot;. Si el algoritmo no es lo suficientemente bueno, puedes terminar con una secuencia de números que parece aleatoria a primera vista</p>
+</li>
+<li><p>Birthday Test: Es una prueba estadistica que se basa en la paradoja del cumpleanos, problema clasico visto en los cursos introductorios de probabilidad y estadistica. En este contexto, se usa para saber si los numeros aleatorios estan demasiado agrupados o no. Porque, al igual que la paradoja de cumpleanos, es comun esperar que los numeros al azar (cumpleanos) se repitan con cierta frecuencia, pero si se repiten demasiado, es probable que no sean tan aleatorios. En el paper se utilizan diferentes variables de este test, como por ejemplo <code>Birthday Spacings Tests with t = 3, with the First 10 Bits Thrown Away</code>, esto para detectar patrones sutiles en los numeros generados.</p>
+<p>El hallazgo mas importante es que la mayoria de los generadores mencionados en la seccion anterior no pasan los tests descriptos anteriormente. El factor que suele ser determinante en el fallo del test es el periodo del generador a probar.</p>
+<p>El autor recomienda no utilizar los generadores de software comercial ni las librerias de RNG por defecto de los lenguajes de programacion si se esta buscando una buena calidad de aleatoriedad. En la actualidad, hay mejores herraminetas disponibles.</p>
+<p>En particular, el autor recomienda aplicar <code>MULTIPLE-STREAM PACKAGES</code>. Es una herramienta que proporciona múltiples flujos (threads) independientes de números pseudoaleatorios. Cada flujo puede ser utilizado en diferentes partes de una simulación, o en diferentes simulaciones, para asegurar que cada uno tiene su propio conjunto independiente de números aleatorios.</p>
+</li>
+</ul>
+<h1 id="v-anexo">V. Anexo</h1>
+<p>Bibliografia:</p>
+<ul>
+<li>[1] P. L&#39;Ecuyer, &quot;Software for uniform random number generation: distinguishing the good and the bad&quot;.</li>
+</ul>
+</body>
