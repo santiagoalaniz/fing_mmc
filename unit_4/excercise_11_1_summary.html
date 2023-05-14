@@ -1,0 +1,291 @@
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f4f4;
+      margin: 20px;
+      padding: 0;
+    }
+
+    pre {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 15px;
+      overflow-x: auto;
+    }
+
+    code.lang-python {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 1em;
+      color: #333;
+    }
+
+    h1, h2, h3, h4 {
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #333;
+      text-decoration: underline;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: auto;
+      padding: 0 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3498db;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f4f4f4;
+    }
+
+  </style>
+</head>
+<body>
+  <h1 id="i-unidad-4-sesi-n-11-sorteo-de-variables-con-distribucion-arbitraria-ejercicio-11-1">I. Unidad 4 - Sesión 11 - Sorteo de Variables con distribucion arbitraria -  Ejercicio 11.1</h1>
+  <h1 id="ii-trabajo-individual-">II. Trabajo Individual.</h1>
+  <ul>
+  <li>Santiago Alaniz, CI 50826476, santiago.alaniz@fing.edu.uy</li>
+  </ul>
+  <h1 id="iii-descripci-n-del-problema">III. Descripción del Problema</h1>
+  <p>Para generar un punto aleatorio <strong>(X1, X2)</strong> en un círculo de centro <strong>(0, 0)</strong> y <strong>radio 1</strong>, es posible hacerlo de la siguiente forma:</p>
+  <ul>
+  <li>Se genera un valor aleatorio r, de distribución <strong>Fr(x) = x^2</strong> para 0 ≤ x ≤ 1, y 0 para cualquier otro x.</li>
+  <li>Se generan dos v.a. independientes Z1 y Z2 de distribución normal (0, 1).</li>
+  <li>Se calcula X1 = rZ1/p(Z1^2 + Z2^2) y X2 = rZ2/p(Z1^2 + Z2^2).</li>
+  </ul>
+  <p>Utilizar esta propiedad para volver a resolver el Ejercicio 6.1 parte a, pero generando únicamente valores de puntos dentro del círculo de base de la montaña:</p>
+  <p><strong>Problema 6.1:</strong> se idealiza una montaña como un cono inscrito en una región cuadrada de lado 1 km. La base de la montaña es circular, con centro en (0.5, 0.5) y radio r = 0.4 km, y la altura es H = 8 km. La altura de cada punto (x, y) de la montaña está dada por la función</p>
+  <ul>
+  <li><strong>f(x, y) = H - H/r × p(x - 0.5)^2 + (y - 0.5)^2</strong></li>
+  </ul>
+  <p>en la zona definida por el círculo, y 0 fuera del círculo. El volumen total de la montaña (en km cúbicos) puede verse como la integral de la función altura en la región.</p>
+  <h3 id="parte-a-">Parte a)</h3>
+  <p>Escribir un programa para calcular el volumen por Monte Carlo. Realizar 10^6 replicaciones y estimar el valor de ζ y el error cometido (con nivel de confianza 0.95), utilizando como criterio la aproximación normal. Comparar la precisión obtenida con la alcanzada en el <strong>Ejercicio 6.1</strong></p>
+  <h1 id="iv-resumen-de-la-soluci-n">IV. Resumen de la Solución</h1>
+  <h2 id="fundamento-te-rico">Fundamento Teórico</h2>
+  <p>Se generaron puntos dentro de la <em>región de interés</em> (<strong>CCL(r=0.4, centro=(0.5, 0.5))</strong>) usando el método del problema, pero modificándolo:</p>
+  <ol>
+  <li>Para generar un valor <strong>r</strong> aleatorio, se utilizó <strong>Fr^-1(U(0,1))</strong> como distribución equivalente a <strong>Fr(x)</strong>.</li>
+  <li>Se generaron <strong>Z1, Z2 ~ Norm(mu=0, var=1)</strong> y se calcularon las coordenadas aleatorias en un <strong>CCL(radio=1, centro=(0, 0))</strong>:<ul>
+  <li>X1 = r Z1 / sqrt(Z1^2 + Z2^2)</li>
+  <li>X2 = r Z2 / sqrt(Z1^2 + Z2^2).</li>
+  </ul>
+  </li>
+  <li>Se ajustaron las coordenadas aleatorias a la <em>región de interés</em> mediante traslación y escalamiento:<ul>
+  <li>X1 = 0.5 + 0.4 * X1</li>
+  <li>X2 = 0.5 + 0.4 * X2</li>
+  </ul>
+  </li>
+  </ol>
+  <p>Se aplicó integración por Monte Carlo pmediante el metodo de aproximacion a la integral de Lebesgue-Stieltjes. La función de altura k(x, y) se aproximó usando puntos generados por la distribución F(x,y) = (X1, X2), y se multiplicó por el área del círculo para obtener la densidad de probabilidad dF(x, y). Finalmente se calculo el error para un nivel de confianza del 95% usando la aproximación normal.</p>
+  <p>Fundamentos Teoricos:</p>
+  <ul>
+  <li>[Sorteo de Variables con distribucion arbitraria] EVA del Curso - Unidad 4 - Sesión 11</li>
+  <li>[Integracion por Monte Carlo] EVA del Curso - Unidad 3 - Sesión 6</li>
+  <li><a href="https://es.wikipedia.org/wiki/Transformaci%C3%B3n_geom%C3%A9trica">[Transformaciones Geometricas]</a></li>
+  <li>[Monte Carlo: concepts, algorithms and applications] - Fishman 1996.</li>
+  </ul>
+  <h2 id="pseudocodigo">Pseudocodigo</h2>
+  <pre><code class="lang-python">
+  Constantes:
+    ccl_cone = (r = 0.4, c = (0.5, 0.5))
+    cone_height = 8
+    n = 1000000
+    delta = 0.05
+
+  Función Fr():
+    return sqrt(uniform_sample)
+
+  Función scl<span class="hljs-emphasis">_to_</span>ccl_cone(x, y):
+    return (x <span class="hljs-bullet">* ccl_cone['r'] + ccl_cone['c'][0], y *</span> ccl<span class="hljs-emphasis">_cone['r'] + ccl_</span>cone[<span class="hljs-string">'c'</span>][<span class="hljs-symbol">1</span>])
+
+  Función F():
+    r = Fr()
+    (Z1, Z2) = (normal<span class="hljs-emphasis">_samples.pop(), normal_</span>samples.pop())
+    X1 = r * Z1 / sqrt(Z1^2 + Z2^2)
+    X2 = r * Z2 / sqrt(Z1^2 + Z2^2)
+    return scl<span class="hljs-emphasis">_to_</span>ccl_cone(X1, X2)
+
+  Función k(x, y):
+    return cone<span class="hljs-emphasis">_height - (cone_</span>height / ccl<span class="hljs-emphasis">_cone['r']) * sqrt((x - ccl_</span>cone[<span class="hljs-string">'c'</span>][<span class="hljs-symbol">0</span>])^2 + (y - ccl_cone[<span class="hljs-string">'c'</span>][<span class="hljs-symbol">1</span>])^2)
+
+  Función montecarlo_simulation(n):
+    Inicializar S = 0, T = 0
+    Para i en rango(n):
+  <span class="hljs-code">    (x, y) = F()</span>
+  <span class="hljs-code">    k_x_y = k(x, y)</span>
+  <span class="hljs-code">    Si i &gt; 1:</span>
+  <span class="hljs-code">      T += (1 - (1/i)) * ((k_x_y - (S/(i-1)))^2)</span>
+  <span class="hljs-code">    S += k_x_y</span>
+
+    Int<span class="hljs-emphasis">_ = (S / n) * ccl_</span>cone_area
+    Var_F = T / (n - 1)
+    Var<span class="hljs-emphasis">_Int_</span> = Var_F / n
+    ic<span class="hljs-emphasis">_delta = norm.ppf(1 - delta/2) * sqrt(Var_</span>Int_)
+    IC = (Int<span class="hljs-emphasis">_ - ic_</span>delta, Int<span class="hljs-emphasis">_ + ic_</span>delta)
+
+    return (Int<span class="hljs-emphasis">_, Var_</span>Int<span class="hljs-emphasis">_, IC, Var_</span>F)
+
+  Función main():
+    (Int<span class="hljs-emphasis">_, Var_</span>Int<span class="hljs-emphasis">_, IC, Var_</span>F) = montecarlo_simulation(n)
+    Imprimir resultados
+  </code></pre>
+  <h1 id="v-resultados-computacionales">V. Resultados Computacionales</h1>
+  <ol>
+  <li>MacBook Air, Apple M1, 2020, 8GB RAM, ptython 3.11.2</li>
+  <li>Semilla: 50826476;</li>
+  <li>$(~/utils) python3 exercise_6_1_redo.py</li>
+  <li>$(~/anexo) python3 exercise_11_1.py</li>
+  </ol>
+  <p>Para este laboratorio y posteriores se utilizara la libreria <code>scipy.stats</code> en vez de <code>random</code>. La justificacion es que es una libreria mas comoda para trabajar y posee mas herramientas. Apelando a la consistencia tecnica, el codigo del ejercicio 6.11 fue re-escrito ultizando esta libreria e incluido en ~anexo/utils/excersice_6_1_redo.py. No hay mucho que comentar sobre la re-escritura de este ejercicio, se trato simplemente de cambiar las dependecias y llamadas a estas.</p>
+  <table>
+  <thead>
+  <tr>
+  <th>Ejecución</th>
+  <th>Comando</th>
+  <th>n</th>
+  <th>Int_</th>
+  <th>Var</th>
+  <th>IC_Normal (min)</th>
+  <th>IC_Normal (max)</th>
+  <th>Diff</th>
+  <th>Tiempo</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>1</td>
+  <td>exercise_6_1_redo.py</td>
+  <td>1000000</td>
+  <td>1.3421821369</td>
+  <td>3.5752838518e-06</td>
+  <td>1.3384761545</td>
+  <td>1.3458881193</td>
+  <td>0.0017692714</td>
+  <td>0:00:00.770</td>
+  </tr>
+  <tr>
+  <td>2</td>
+  <td>exercise_11_1.py</td>
+  <td>1000000</td>
+  <td>1.3387230133</td>
+  <td>3.5483240768e-06</td>
+  <td>1.3350310300</td>
+  <td>1.3424149967</td>
+  <td>0.0016898522</td>
+  <td>0:00:00.894</td>
+  </tr>
+  <tr>
+  <td>3</td>
+  <td>exercise_6_1_redo.py</td>
+  <td>100000</td>
+  <td>1.3404009111</td>
+  <td>3.5853824375e-05</td>
+  <td>1.3286650264</td>
+  <td>1.3521367958</td>
+  <td>1.1954449e-05</td>
+  <td>0:00:00.079</td>
+  </tr>
+  <tr>
+  <td>4</td>
+  <td>exercise_11_1.py</td>
+  <td>100000</td>
+  <td>1.3407402621</td>
+  <td>3.5565852740e-05</td>
+  <td>1.3290516026</td>
+  <td>1.3524289215</td>
+  <td>0.0003273965</td>
+  <td>0:00:00.090</td>
+  </tr>
+  <tr>
+  <td>5</td>
+  <td>exercise_6_1_redo.py</td>
+  <td>10000</td>
+  <td>1.3481004954</td>
+  <td>0.0003621266</td>
+  <td>1.3108031146</td>
+  <td>1.3853978762</td>
+  <td>0.0076876298</td>
+  <td>0:00:00.008</td>
+  </tr>
+  <tr>
+  <td>6</td>
+  <td>exercise_11_1.py</td>
+  <td>10000</td>
+  <td>1.3354770752</td>
+  <td>0.0003548754</td>
+  <td>1.2985550030</td>
+  <td>1.3723991474</td>
+  <td>0.0049357903</td>
+  <td>0:00:00.010</td>
+  </tr>
+  <tr>
+  <td>7</td>
+  <td>exercise_6_1_redo.py</td>
+  <td>1000</td>
+  <td>1.4061802260</td>
+  <td>0.0038555227</td>
+  <td>1.2844804655</td>
+  <td>1.5278799866</td>
+  <td>0.0657673605</td>
+  <td>0:00:00.001</td>
+  </tr>
+  <tr>
+  <td>8</td>
+  <td>exercise_11_1.py</td>
+  <td>1000</td>
+  <td>1.3974097956</td>
+  <td>0.0036746722</td>
+  <td>1.2785985924</td>
+  <td>1.5162209988</td>
+  <td>0.0569969300</td>
+  <td>0:00:00.001</td>
+  </tr>
+  </tbody>
+  </table>
+  <p>El caso n=100000 fue verdaderamente favorable para el metodo clasico. Dejando de lado esto, los demas se comportaron como se esperaba.</p>
+  <p>Se puede apreciar que la varianza siempre es menor en el ejercicio 11.1 y por lo tanto el IC tambien. Tambien se puede apreciar que la diferencia entre el estimador y el valor real es menor en el ejercicio 11.1.</p>
+  <h1 id="vi-anexo">VI. Anexo</h1>
+  <p>Consultar la carpeta ~/anexo por los logs, capturas, código de la solución y demás archivos de interés.</p>
+</body>
