@@ -1,19 +1,19 @@
 {
   "main": {
-    "id": "b9e4d6414f359b17",
+    "id": "e622daec86b21076",
     "type": "split",
     "children": [
       {
-        "id": "78e572572cb4ae1a",
+        "id": "81c0e4eba6b5eaf2",
         "type": "tabs",
         "children": [
           {
-            "id": "b1144c0af41e30a8",
+            "id": "9e97c71a5e92cb10",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "unit_2/exercise_6_2_summary.md",
+                "file": "unit_4/exercise_8_1_summary.md",
                 "mode": "source",
                 "source": false
               }
@@ -25,15 +25,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "490c230b64878d3b",
+    "id": "2030b495555765d5",
     "type": "split",
     "children": [
       {
-        "id": "2a8f5b244c9131cb",
+        "id": "6b2c2360a9ad4707",
         "type": "tabs",
         "children": [
           {
-            "id": "e889d92cb05587dc",
+            "id": "19019605b62e4266",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -43,7 +43,7 @@
             }
           },
           {
-            "id": "c5cd750d4e92f2ff",
+            "id": "5d257e393138bbe5",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -58,7 +58,7 @@
             }
           },
           {
-            "id": "2b6df24c8ea29f2c",
+            "id": "6b9ac31126bfae7a",
             "type": "leaf",
             "state": {
               "type": "starred",
@@ -69,24 +69,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
-    "id": "1cc626b806642dc7",
+    "id": "4a374aed1fd54b44",
     "type": "split",
     "children": [
       {
-        "id": "1539fc0c660dde61",
+        "id": "4ddcc0c98d1dfd51",
         "type": "tabs",
         "children": [
           {
-            "id": "26e0cd9a4e460eca",
+            "id": "86a1646af1903aa6",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "unit_2/exercise_6_2_summary.md",
+                "file": "unit_4/exercise_8_1_summary.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,19 +97,19 @@
             }
           },
           {
-            "id": "796cd6aa6f6cd58e",
+            "id": "90da574998509eb5",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "unit_2/exercise_6_2_summary.md",
+                "file": "unit_4/exercise_8_1_summary.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "b432dbdb323b88a5",
+            "id": "6596b30cd77c7c76",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -121,12 +120,12 @@
             }
           },
           {
-            "id": "a81da8a4f0ec99b7",
+            "id": "3fc69cc5a07f7200",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "unit_2/exercise_6_2_summary.md"
+                "file": "unit_4/exercise_8_1_summary.md"
               }
             }
           }
@@ -147,10 +146,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e889d92cb05587dc",
+  "active": "9e97c71a5e92cb10",
   "lastOpenFiles": [
-    "unit_2/exercise_6_1_summary.md",
-    "unit_2/exercise_5_1_summary.md",
-    "unit_2/exercise_6_2_summary.md"
+    "unit_4/exercise_8_1_summary.md",
+    "unit_4/anexo/utils/RAND_true_random_numbers.txt",
+    "unit_4/anexo/utils",
+    "unit_4/anexo/log_8.1.txt",
+    "unit_4/anexo/exercise_8_1_b.py",
+    "unit_4/anexo",
+    "unit_4",
+    "unit_2/exercise_6_2_summary.html",
+    "unit_2/exercise_5_1_summary.html"
   ]
 }
