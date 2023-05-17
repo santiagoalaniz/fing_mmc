@@ -96,9 +96,9 @@ def stratified_montecarlo_simulation(proportional=bool):
  
 |    Ej    |        Int_        |           Var          | IC (inferior) | IC (superior) |      time      |
 |:-------:|:------------------:|:----------------------:|:--------------------:|:--------------------:|:--------------:|
-| No Estratificado | 0.001395 | 9.488065e-11 | 0.001376 | 0.001414 | 0:00:01.162361 |
-| Estratificado Evenly | 0.003921 | 3.156507e-10 | 0.003886 | 0.003956 | 0:00:01.380145 |
-| Estratificado Proporcional | 0.001386 | 9.379704e-11 | 0.001367 | 0.001405 | 0:00:01.358470 |
+| No Estratificado | 0.001395 | 9.488065e-11 | 0.001376 | 0.001414 | 0:00:01.16 |
+| Estratificado Evenly | 0.003921 | 3.156507e-10 | 0.003886 | 0.003956 | 0:00:01.38 |
+| Estratificado Proporcional | 0.001386 | 9.379704e-11 | 0.001367 | 0.001405 | 0:00:01.35 |
 
 La solución analítica para la integral de la función es: 0.001389...
 
