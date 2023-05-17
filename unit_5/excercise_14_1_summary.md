@@ -104,7 +104,7 @@ La solución analítica para la integral de la función es: 0.001389...
 
 Como vemos la versión estratificada evenly generó una pésima estimación, esto demuestra la importancia de pensar cómo se distribuye la cantidad de repeticiones por estratos no solo en los intervalos de estratificación.
 
-Por otro lado, a pesar de que no es el objetivo principal la versión estratificada proporcionalmente produce una mejor estimación que la versión no estratificada. Vemos que también mejora la varianza al reducirla (objetivo de estratificar el algoritmo). 
+Por otro lado, a pesar de que no es el objetivo principal, la versión estratificada proporcionalmente produce una mejor estimación que la versión no estratificada. Vemos que también mejora la varianza al reducirla (objetivo de estratificar el algoritmo). 
 
 Consideramos que fue inteligente estratificar x5 ya que es la V.A. que más influye en el valor de la integral de la función al ser elevada a la 5, por eso no interesa que esté bien distribuida y tenga buena representación.
 
