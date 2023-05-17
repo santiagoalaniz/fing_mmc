@@ -79,6 +79,12 @@ def stratified_montecarlo_simulation(proportional=bool):
     IC = (Int_ - ic_delta, Int_ + ic_delta)
 
     return (Int_, Var_Int_, IC)
+
+
+
+
+
+
 ```
 
 
