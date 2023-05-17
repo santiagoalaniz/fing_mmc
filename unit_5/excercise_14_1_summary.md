@@ -90,11 +90,11 @@ def stratified_montecarlo_simulation(proportional=bool):
  
 |    Ej    |        Int_        |           Var          | IC (inferior) | IC (superior) |      time      |
 |:-------:|:------------------:|:----------------------:|:--------------------:|:--------------------:|:--------------:|
-| No Estratificado | 0.0013947826466344068 | 9.488065128969899e-11 | 0.001375691284325498 | 0.0014138740089433156 | 0:00:01.162361 |
-| Estratificado Evenly | 0.003920695892085187 | 3.1565066823938745e-10 | 0.003885874073583475 | 0.0039555177105869 | 0:00:01.380145 |
-| Estratificado Proporcional | 0.0013860941423695986 | 9.379703525270451e-11 | 0.0013671121127513924 | 0.0014050761719878048 | 0:00:01.358470 |
+| No Estratificado | 0.001395 | 9.488065e-11 | 0.001376 | 0.001414 | 0:00:01.162361 |
+| Estratificado Evenly | 0.003921 | 3.156507e-10 | 0.003886 | 0.003956 | 0:00:01.380145 |
+| Estratificado Proporcional | 0.001386 | 9.379704e-11 | 0.001367 | 0.001405 | 0:00:01.358470 |
 
-La solución analítica para la integral de la función es: 0.0013888...
+La solución analítica para la integral de la función es: 0.001389...
 
 Como vemos la versión estratificada evenly generó una pésima estimación, esto demuestra la importancia de pensar cómo se distribuye la cantidad de repeticiones por estratos no solo en los intervalos de estratificación.
 
