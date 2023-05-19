@@ -150,8 +150,8 @@ def random_point(df, SEED):
 - $ python3 exercise_8_1.py LINEAR
 
 ## Parte B
-
 Utilizando Tabla Pregenerada
+
 |    n    |   Vol_   |           Var          | Tiempo de cálculo | BOUNDARIES |
 |:-------:|:--------:|:----------------------:|:-----------------:|:----------:|
 | 10000   | 0.0001   | 1e-08  |  0:00:00.562749    | True       |
@@ -159,6 +159,7 @@ Utilizando Tabla Pregenerada
 | 100000 | 0.00025 | 2.49939999399994e-09| 0:00:03.922398   | True       |
 
 Utilizando librerias de Python
+
 |    n    |   Vol_   |           Var          | Tiempo de cálculo | BOUNDARIES |
 |:-------:|:--------:|:----------------------:|:-----------------:|:----------:|
 | 10000   | 0.0004   | 3.998799879987999e-08  | 0:00:00.042454    | True       |

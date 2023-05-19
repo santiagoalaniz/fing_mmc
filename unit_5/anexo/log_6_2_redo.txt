@@ -1,0 +1,2 @@
+➜  montecarlo_exercises git:(main) ✗ python3 unit_5/anexo/exercise_6_2_redo.py
+Int_ = 0.0013947826466344068, Var_Int_ = 9.488065128969899e-11, IC = (0.001375691284325498, 0.0014138740089433156), time = 0:00:00.701366
