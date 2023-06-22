@@ -43,7 +43,7 @@ def proportionaly_strat_sampling() -> list:
     return aux
         
  
-def stratified_montecarlo_simulation(proportional=bool) -> (float, float, (float, float)):
+def stratified_montecarlo_simulation(proportional=bool):
     # Init
     S = 0
     T = 0

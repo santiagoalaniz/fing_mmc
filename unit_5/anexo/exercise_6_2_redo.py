@@ -19,7 +19,7 @@ n = 1000000
 delta = 0.05
 uniform_samples = std_uniform(n*5).tolist()
 
-def montecarlo_simulation() -> (float, float, (float, float)):
+def montecarlo_simulation():
     # Init
     S = 0
     T = 0
